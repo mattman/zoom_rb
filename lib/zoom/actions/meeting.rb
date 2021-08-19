@@ -65,7 +65,14 @@ module Zoom
         params.require(:meeting_id)
         Utils.parse_response self.class.patch("/meetings/#{params[:meeting_id]}/registrants/questions", body: params.except(:meeting_id).to_json, headers: request_headers)
       end
-
+      
+      # Delete meeting registrant
+      def meeting_delete_registrant(*args)
+        params = Zoom::Params.new(Utils.extract_options!(args))
+        params.require(%i[meeting_id registrant_id]).permit(%i[occurrence_id])
+        Utils.parse_response self.class.delete("/meetings/#{params[:meeting_id]}/registrants/#{params[:registrant_id]}", query: query: params.slice(:occurrence_id), headers: request_headers)
+      end
+          
       # Retrieve ended meeting details
       def past_meeting_details(*args)
         params = Zoom::Params.new(Utils.extract_options!(args))
