@@ -70,7 +70,7 @@ module Zoom
       def meeting_delete_registrant(*args)
         params = Zoom::Params.new(Utils.extract_options!(args))
         params.require(%i[meeting_id registrant_id]).permit(%i[occurrence_id])
-        Utils.parse_response self.class.delete("/meetings/#{params[:meeting_id]}/registrants/#{params[:registrant_id]}", query: query: params.slice(:occurrence_id), headers: request_headers)
+        Utils.parse_response self.class.delete("/meetings/#{params[:meeting_id]}/registrants/#{params[:registrant_id]}", query: params.slice(:occurrence_id), headers: request_headers)
       end
           
       # Retrieve ended meeting details
